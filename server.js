@@ -8,12 +8,13 @@ log.setDefaultLevel(env.loglevel);
 
 let clientMqtt = mqtt.connect(env.address);
 
+clientMqtt.on('connect', function () {
+    log.info(dateFormat(new Date(), "dd/mm/yyyy H:MM:ss"), 'Connected to:', env.address);
+});
+
 http.createServer(function (req, res) {
-    //log.debug(req);
+    log.info(dateFormat(new Date(), "dd/mm/yyyy H:MM:ss"), 'Message receive');
     clientMqtt.publish(env.topic_ven, '1');
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    res.write('Hello World!');
-    res.end();
 }).listen(env.port, (err) => {
     if (err) {
         return console.log('something bad happened', err)
