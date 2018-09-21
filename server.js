@@ -15,6 +15,7 @@ clientMqtt.on('connect', function () {
 http.createServer(function (req, res) {
     log.info(dateFormat(new Date(), "dd/mm/yyyy H:MM:ss"), 'Message receive');
     clientMqtt.publish(env.topic_ven, '1');
+    log.debug(dateFormat(new Date(), "dd/mm/yyyy H:MM:ss"), 'Send Order to', env.topic_ven);
 }).listen(env.port, (err) => {
     if (err) {
         return console.log('something bad happened', err)
